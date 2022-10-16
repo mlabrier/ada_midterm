@@ -51,6 +51,9 @@ table(titanic_midterm$Pclass_factor)
 #determine the median age by passenger class
 by(titanic_midterm$Age, titanic_midterm$Pclass_factor, median)
 
+#create table to display the median age by passenger class in a table
+table1(~Age | Pclass_factor, data=titanic_midterm)
+
 ```
 
 #Create a plot that shows medians, spread of data, and outliers for the continuous variable age according to passenger class (question 3c)
@@ -60,6 +63,22 @@ by(titanic_midterm$Age, titanic_midterm$Pclass_factor, median)
 ggplot(data = titanic_midterm, aes(x = Pclass_factor, y = Age)) +
   geom_boxplot() +
   labs(x = "Passenger Class", y = "Age",  title = "Figure 1. Age by Passenger class")
+
+```
+
+#Determine the percentage of males and females by passenger class (question 4b)
+```{r}
+#check variable type for sex
+class(titanic_midterm$Sex)
+
+#convert sex variable from a character variable to a factor variable
+titanic_midterm$Sex_factor <- as.factor(titanic_midterm$Sex)
+
+#check the class of the new factor sex (Sex_factor) variable
+class(titanic_midterm$Sex_factor)
+
+#determine the percentage of males and females by passenger class, diplay in table
+table1(~Sex_factor | Pclass_factor, data=titanic_midterm)
 
 ```
 
