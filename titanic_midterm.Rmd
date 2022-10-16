@@ -1,0 +1,65 @@
+---
+title: "titanic_midterm"
+author: "Mia LaBrier"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+
+#Load libraries
+```{r}
+pacman::p_load(tidyverse, ggplot2, dplyr, table1)
+```
+
+
+#Import titanic dataset from Github (question 3a)
+```{r}
+titanic_midterm <- read_csv("https://raw.githubusercontent.com/kijohnson/Data/main/titanic.csv")
+```
+
+#Explore dataset
+```{r}
+#determine the number of observations and variables in titanic_midterm
+dim(titanic_midterm)
+
+#determine and display the number of factor, integer, numerical, and character variables in titanic_midterm
+table(sapply(titanic_midterm, class))
+
+#check for missing values
+summary(is.na(titanic_midterm))
+
+#summary of data in titanic_midterm
+summary(titanic_midterm)
+
+```
+
+#Determine the median age by passenger class (question 3b)
+```{r}
+#check variable type for age and passenger class
+class(titanic_midterm$Age)
+class(titanic_midterm$Pclass)
+
+#convert passenger class variable from a numeric variable to a factor variable
+titanic_midterm$Pclass_factor<-as.factor(titanic_midterm$Pclass) 
+
+#check the class of the new factor passenger class (Pclass_factor) variable
+class(titanic_midterm$Pclass_factor)
+
+#determine the number of passengers in each passenger class
+table(titanic_midterm$Pclass_factor)
+
+#determine the median age by passenger class
+by(titanic_midterm$Age, titanic_midterm$Pclass_factor, median)
+
+```
+
+#Create a plot that shows medians, spread of data, and outliers for the continuous variable age according to passenger class (question 3c)
+```{r}
+
+#boxplot of age according to passenger class (demonstrates median, spread of data, and outliers)
+ggplot(data = titanic_midterm, aes(x = Pclass_factor, y = Age)) +
+  geom_boxplot() +
+  labs(x = "Passenger Class", y = "Age",  title = "Figure 1. Age by Passenger class")
+
+```
+
